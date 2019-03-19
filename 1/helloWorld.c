@@ -14,14 +14,16 @@ int main(int argc, char *argv[]){
 
     for (i = id; i<65536; i+= p)
         check_circuit (id, i);
-
-    printf ("Process %d is done\n", id);
+    int len;
+    char processor_name[MPI_MAX_PROCESSOR_NAME];
+    MPI_Get_processor_name (processor_name, &len);
+    printf ("Hello world from process %d of %d on %s\n", id, p, processor_name);
     fflush (stdout);
     MPI_Finalize();
     return 0;
 }
 
-/* Return 1 ikf 'i'th bit of 'n' is 1; 0 otherwise */
+/* Return 1 if 'i'th bit of 'n' is 1; 0 otherwise */
 #define EXTRACT_BIT(n, i) ((n&(1<<i))?1:0)
 
 void check_circuit (int id, int z) {
